@@ -93,7 +93,7 @@ contract LiquidPledgingBase {
 // Managers functions
 //////
 
-    function addDonor(string name, uint64 commitTime, ILiquidPledgingPlugin plugin) returns (uint64 idDonor) {//Todo return idManager
+    function addDonor(string name, uint64 commitTime, ILiquidPledgingPlugin plugin) returns (uint64 idDonor) {
 
         idDonor = uint64(managers.length);
 
@@ -141,10 +141,10 @@ contract LiquidPledgingBase {
             false,
             plugin));
 
-        DeegateAdded(idDelegate);
+        DelegateAdded(idDelegate);
     }
 
-    event DeegateAdded(uint64 indexed idDelegate);
+    event DelegateAdded(uint64 indexed idDelegate);
 
     function updateDelegate(
         uint64 idDelegate,

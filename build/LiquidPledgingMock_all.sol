@@ -93,7 +93,7 @@ contract LiquidPledgingBase {
 // Managers functions
 //////
 
-    function addDonor(string name, uint64 commitTime, ILiquidPledgingPlugin plugin) returns (uint64 idDonor) {//Todo return idManager
+    function addDonor(string name, uint64 commitTime, ILiquidPledgingPlugin plugin) returns (uint64 idDonor) {
 
         idDonor = uint64(managers.length);
 
@@ -141,10 +141,10 @@ contract LiquidPledgingBase {
             false,
             plugin));
 
-        DeegateAdded(idDelegate);
+        DelegateAdded(idDelegate);
     }
 
-    event DeegateAdded(uint64 indexed idDelegate);
+    event DelegateAdded(uint64 indexed idDelegate);
 
     function updateDelegate(
         uint64 idDelegate,
@@ -413,6 +413,10 @@ contract LiquidPledging is LiquidPledgingBase {
     /// @param idReceiver To whom it's transfered. Can be the same donor, another
     ///  donor, a delegate or a project
     function donate(uint64 idDonor, uint64 idReceiver) payable {// TODO change to `pledge()`
+        if (idDonor == 0) {
+            idDonor = addDonor('', 259200, ILiquidPledgingPlugin(0x0)); // default to 3 day commitTime
+        }
+
         NoteManager storage sender = findManager(idDonor);
 
         checkManagerOwner(sender);
